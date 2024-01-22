@@ -1,18 +1,19 @@
-export function printLog(
-  target: Object,
-  propertyName: string,
-  descriptor: PropertyDescriptor
-) {
-  // Store Original Method Implemetation
-  const originalMethod = descriptor.value;
+export function printLog(message: string = 'Method returned:') {
+  return function (
+    target: Object,
+    propertyName: string,
+    descriptor: PropertyDescriptor
+  ) {
+    // Store Original Method Impleentation
+    const originalMethod = descriptor.value;
 
-  // Now, over-write the original method
-  descriptor.value = function (...args: any[]) {
-    // Call original function
-    const result = originalMethod.apply(this, args);
-    // Execute custom logic
-    console.log(`-- ${propertyName}() returned: `, result);
-    return result;
+    // Now, over-write the original method
+    descriptor.value = function (...args: any[]) {
+      const result = originalMethod.apply(this, args);
+      message = message ? message : `-- ${propertyName}() returned: `;
+      console.log(message, result); // Execute custom logic
+      return result;
+    };
+    return descriptor;
   };
-  return descriptor;
 }
