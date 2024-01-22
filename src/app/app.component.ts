@@ -13,6 +13,10 @@ import { RandomClass } from './random.class';
 export class AppComponent extends RandomClass {
   title = 'decorator';
   public value = 0;
+
+  public innerHTML = `
+  <h2>How cool is that?</h2>
+  `;
   ngOnInit() {
     this.value = this.getRandom();
   }
